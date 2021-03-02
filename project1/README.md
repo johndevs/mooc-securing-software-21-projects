@@ -36,6 +36,10 @@ The Login screen can also directly be abused (without submittinh the FORM) by ac
 
 The Login screen additionally will send the username and password as HTTP GET parameters so they will also be exposed in server logs and the browser history.
 
+### Access control vulnerability in product filtering
+
+You can view all products in the system simply by giving the filter parameter to the url. You can test this out via the link on the login screen.
+
 ### XSS injection for stealing cookie
 
 Once you have successfully logged in you can test another XSS vulnerability in the "Add product:" field by injecting a script tag in the product name field. This can be simulated with the **XSS injection attack (steal cookies)** link as well.
@@ -44,6 +48,10 @@ Once you have successfully logged in you can test another XSS vulnerability in t
 
 The "Find Product by Name" field can be used for SQL injection attacks to get any information from the system database. An example of this can been seen by clicking the **Sql injection attack (Get all users of system along with their details)** link. Once you click search you will be taken to a page that lists all users of the system.
 
-### Broken access control on searching for products
+### Using Components with Known Vulnerabilities
 
-Somebody has forgotten to ensure that all views are secured by access control. For example by accessing [this url](http://127.0.0.1:8000/find_product?name=) you can get a listing of all products without logging in.
+The system uses the insecure [PullDOM](https://docs.python.org/3/library/xml.dom.pulldom.html#module-xml.dom.pulldom) library for processing XML imports. This gives access to the following vulnerability.
+
+### XXE vulnerability in processing XML product imports
+
+The system provides a utility to import product defined in XML. By using a XML file the ENTITY header can be used to pull information from the system. It can be tested by uploading the /static/products.xml file.
