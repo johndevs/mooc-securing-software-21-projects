@@ -2,6 +2,16 @@
 <html>
 
 <body>
+
+    <p>
+        <h2>Products:</h2>
+        <ul>
+            {% autoescape off %} {% for p in products %}
+            <li>{{ p.name}}</li>
+            {% endfor %} {% endautoescape %}
+        </ul>
+    </p>
+
     <p>
         <form method="POST" action="/add_product">
             {% csrf_token %}
@@ -12,9 +22,9 @@
         </form>
     </p>
     <p>
-        <form method="GET" action="/find_product">
+        <form method="GET">
             <label>Find Product by Name</label><br/>
-            <input id="find_product_by_name" name="name" type="text" />
+            <input id="find_product_by_name" name="filter" type="text" />
             <button type="submit ">Search</button>
             <a href="#" onClick="sql_inject_attack()">Sql injection attack (Get all users of system along with their details)</a>
         </form>
@@ -25,6 +35,7 @@
             <label for="file">Import Products (XML):</label><br>
             <input name="file" type="file" />
             <button type="submit ">Submit</button>
+            <span>Use <a href="/static/products.xml" download="wicked-products.xml">this file</a> to use a XXE Entity vulnerability to expose all users on a Unix system</span>
         </form>
     </p>
 
