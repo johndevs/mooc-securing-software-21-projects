@@ -1,0 +1,23 @@
+<h2>Log In</h2>
+<form method="GET" action="do_login">
+    <label for="username">Username:</label>
+    <input id="username" type="text" name="username" /><a href="#" onclick="xss_inject()">XSS injection attack (site redirect)</a><br/>
+    <label for="password">Password:</label>
+    <input type="password" name="password" /><br/>
+    <button type="submit">Log In</button>
+
+    <div style="color:red" id=message></div>
+
+    <script>
+        function xss_inject() {
+            var img = "https://www.freepnglogos.com/uploads/hacker-png/hacker-interpol-arrests-suspected-anonymous-hackers-motley-5.png";
+            document.querySelector("#username").value = `<img src="${img}" onload="window.location.href='http://some.malicious.site.com';this.parentNode.removeChild(this);"/>`;
+        }
+        parameters = new URLSearchParams(window.location.search);
+        if (parameters.get('message')) {
+            message = decodeURIComponent(parameters.get('message'));
+            console.log(message);
+            document.querySelector("#message").innerHTML = message;
+        }
+    </script>
+</form>

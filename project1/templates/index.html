@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p>
+        <form method="POST" action="/add_product">
+            {% csrf_token %}
+            <label>Add product:</label><br>
+            <input id="add_product" name="name" type="text" />
+            <button type="submit">Submit</button>
+            <a href="#" onClick="xss_inject_attack()">XSS injection attack (steal cookies)</a>
+        </form>
+    </p>
+    <p>
+        <form method="GET" action="/find_product">
+            <label>Find Product by Name</label><br/>
+            <input id="find_product_by_name" name="name" type="text" />
+            <button type="submit ">Search</button>
+            <a href="#" onClick="sql_inject_attack()">Sql injection attack (Get all users of system along with their details)</a>
+        </form>
+    </p>
+    <p>
+        <form method="POST" action="/import_products" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file">Import Products (XML):</label><br>
+            <input name="file" type="file" />
+            <button type="submit ">Submit</button>
+        </form>
+    </p>
+
+    <a href="/logout">Log out</a>
+
+    <script>
+        function xss_inject_attack() {
+            document.querySelector("#add_product").value = "<script>alert('I got your cookie, ha-haa!')</scr" + "ipt>";
+        }
+
+        function sql_inject_attack() {
+            document.querySelector("#find_product_by_name").value = "' AND false UNION ALL select id, username||' '||password||' '||first_name||''||last_name||' '||email from auth_user where username like '";
+        }
+    </script>
+
+</body>
+
+</html>
