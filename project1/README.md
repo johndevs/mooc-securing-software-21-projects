@@ -2,8 +2,7 @@
 
 This project is course project (Project 1) for the online course https://cybersecuritybase.mooc.fi/.
 
-The project *SHOULD NOT* be used for anything else than for the project course as it is insecure and 
-against all best security practices.
+The project *SHOULD NOT* be used for anything else than for the project course as it is insecure and against all best security practices.
 
 ## Getting started
 

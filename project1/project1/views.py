@@ -23,6 +23,7 @@ def all_products(request):
     products = Product.objects.all()
     return render(request, "index.html", {"products": products})
 
+#@login_required(login_url='/login')
 def filtered_products(request):
     filter = request.GET.get('filter', '')
     products = Product.objects.raw("SELECT * FROM project1_Product where name like '%" + filter + "%'")
